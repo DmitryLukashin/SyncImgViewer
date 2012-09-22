@@ -1,0 +1,3 @@
+INDEX VERSION 1.126+C:\Space\Projects\SyncImgViewer\Mobile_part\.metadata\.plugins\org.eclipse.jdt.core
+290691809.index
+2139441669.index
