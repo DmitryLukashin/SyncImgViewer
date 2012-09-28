@@ -9,7 +9,11 @@ import java.awt.Image;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.io.File;
-
+import java.lang.Object;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import org.omg.CORBA.Environment;
+import sun.nio.fs.WindowsFileSystemProvider;
 /**
  *
  * @author Dmitry_Lukashin
@@ -29,13 +33,41 @@ public class ImageViewerUI extends javax.swing.JFrame {
         //Set full screen mode for window
         GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(this);
         
-        imageFolder = "C:\\Space\\Projects\\SyncImgViewer\\Desktop_part\\Java\\Images\\logo.png";
-        screenImage = Toolkit.getDefaultToolkit().getImage(imageFolder);
+        String sPath = GetCurrentDirectory();
+        
+        String sImgPath = Paths.get(sPath).getParent().toString() + "\\Images\\";
+        
+        File file = new File(sImgPath);
+        File[] images = file.listFiles();
+        
+        if (images == null || images.length == 0) return;
+
+        String imgPath = images[0].getPath();
+        screenImage = Toolkit.getDefaultToolkit().getImage(imgPath);
+        
         
         w = getWidth();
         h = getHeight();
     }
 
+    private String GetCurrentDirectory()
+    {
+        String curDir = null;
+        File dir1 = new File(".");
+        
+        try
+        {
+            curDir = dir1.getCanonicalPath();
+            //return curDir;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        
+        return curDir;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
