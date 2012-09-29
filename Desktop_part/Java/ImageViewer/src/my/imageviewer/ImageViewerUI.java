@@ -4,16 +4,14 @@
  */
 package my.imageviewer;
 
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.io.File;
-import java.lang.Object;
-import java.nio.file.Path;
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.nio.file.Paths;
-import org.omg.CORBA.Environment;
-import sun.nio.fs.WindowsFileSystemProvider;
+
 /**
  *
  * @author Dmitry_Lukashin
@@ -33,6 +31,7 @@ public class ImageViewerUI extends javax.swing.JFrame {
         //Set full screen mode for window
         GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(this);
         
+        
         String sPath = GetCurrentDirectory();
         
         String sImgPath = Paths.get(sPath).getParent().toString() + "\\Images\\";
@@ -48,6 +47,8 @@ public class ImageViewerUI extends javax.swing.JFrame {
         
         w = getWidth();
         h = getHeight();
+        
+ 
     }
 
     private String GetCurrentDirectory()
@@ -58,7 +59,6 @@ public class ImageViewerUI extends javax.swing.JFrame {
         try
         {
             curDir = dir1.getCanonicalPath();
-            //return curDir;
         }
         catch(Exception e)
         {
@@ -77,6 +77,8 @@ public class ImageViewerUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -85,15 +87,25 @@ public class ImageViewerUI extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setLabelFor(this);
+        jLabel1.setText("Нажмите Esc для выхода");
+
+        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(layout.createSequentialGroup()
+                .add(26, 26, 26)
+                .add(jLabel1)
+                .addContainerGap(246, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(layout.createSequentialGroup()
+                .add(49, 49, 49)
+                .add(jLabel1)
+                .addContainerGap(237, Short.MAX_VALUE))
         );
 
         pack();
@@ -102,17 +114,47 @@ public class ImageViewerUI extends javax.swing.JFrame {
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
         //
-        
+        int keyCode = evt.getKeyCode();
+        if (evt.getKeyCode() == 27)
+        {
+            System.exit(0);
+        }        
     }//GEN-LAST:event_formKeyPressed
-
+    
     public void paint(Graphics g)
     {
+        
         if (screenImage != null)
         {
+            
             g.drawImage(screenImage, w/2 - screenImage.getWidth(this)/2,
                     h/2 - screenImage.getHeight(this)/2, this);
+            
+            g.setColor(Color.WHITE);
+            g.drawString("Press Esc for exit", 0, 10);
+            
         }
     }
+    
+    public ServerSocket openServerSocket()
+    {
+        int port = 4446;
+        ServerSocket serverSocket = null;
+        try
+        {
+            serverSocket = new ServerSocket(port);
+        }
+        catch(IOException e)
+        {
+            System.out.println("Could not listen on port: " + port);
+            System.out.println(e.getMessage());
+            System.out.println(e.getStackTrace());
+            System.exit(-1);
+        }
+        
+        return serverSocket;
+    }
+    
     
     /**
      * @param args the command line arguments
@@ -156,5 +198,6 @@ public class ImageViewerUI extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
