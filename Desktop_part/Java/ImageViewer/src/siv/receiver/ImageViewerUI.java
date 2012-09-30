@@ -2,15 +2,24 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package my.imageviewer;
+package siv.receiver;
 
 import java.awt.*;
-import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
+import java.nio.*;
+import java.nio.channels.*;
+import java.nio.channels.spi.*;
+import java.nio.charset.*;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.spi.SelectorProvider;
 import java.nio.file.Paths;
+import java.net.*;
+import java.util.*;
 
 /**
  *
@@ -30,8 +39,7 @@ public class ImageViewerUI extends javax.swing.JFrame {
         
         //Set full screen mode for window
         GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(this);
-        
-        
+
         String sPath = GetCurrentDirectory();
         
         String sImgPath = Paths.get(sPath).getParent().toString() + "\\Images\\";
@@ -43,12 +51,11 @@ public class ImageViewerUI extends javax.swing.JFrame {
 
         String imgPath = images[0].getPath();
         screenImage = Toolkit.getDefaultToolkit().getImage(imgPath);
-        
-        
+
         w = getWidth();
         h = getHeight();
-        
  
+        InitChannel();
     }
 
     private String GetCurrentDirectory()
@@ -155,6 +162,31 @@ public class ImageViewerUI extends javax.swing.JFrame {
         return serverSocket;
     }
     
+    
+    private ServerSocketChannel InitChannel()
+    {
+        try
+        {
+            int port = 4450;
+            Selector selector = SelectorProvider.provider().openSelector();
+            ServerSocketChannel channel = ServerSocketChannel.open();
+            channel.configureBlocking(false);
+
+            InetAddress lh = InetAddress.getLocalHost();
+            InetSocketAddress isa = new InetSocketAddress(lh, port);
+
+            channel.socket().bind(isa);
+
+            SelectionKey acceptKey = channel.register(selector, SelectionKey.OP_ACCEPT);
+            
+            return channel;
+        }
+        catch(IOException e)
+        {
+        }
+        
+        return null;
+    }
     
     /**
      * @param args the command line arguments
