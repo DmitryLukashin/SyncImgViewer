@@ -55,7 +55,9 @@ public class ImageViewerUI extends javax.swing.JFrame {
         w = getWidth();
         h = getHeight();
  
-        InitChannel();
+        ServerSocketChannel ssc = InitChannel();
+        ListenSocket(ssc);
+        
     }
 
     private String GetCurrentDirectory()
@@ -145,7 +147,7 @@ public class ImageViewerUI extends javax.swing.JFrame {
     
     public ServerSocket openServerSocket()
     {
-        int port = 4446;
+        int port = 4000;
         ServerSocket serverSocket = null;
         try
         {
@@ -167,7 +169,7 @@ public class ImageViewerUI extends javax.swing.JFrame {
     {
         try
         {
-            int port = 4450;
+            int port = 4000;
             Selector selector = SelectorProvider.provider().openSelector();
             ServerSocketChannel channel = ServerSocketChannel.open();
             channel.configureBlocking(false);
@@ -183,9 +185,47 @@ public class ImageViewerUI extends javax.swing.JFrame {
         }
         catch(IOException e)
         {
+            e.printStackTrace();
         }
         
         return null;
+    }
+    
+    private void ListenSocket(ServerSocketChannel channel)
+    {
+        try
+        {
+            while (true)
+            {
+                SocketChannel sc = channel.accept();
+                
+                if (sc != null)
+                {
+                    System.out.println("The connection has been accepted...");
+                    
+                    ByteBuffer buffer = ByteBuffer.allocate(200);
+                    int count = sc.read(buffer);
+                    int value = buffer.getInt();
+                    
+                    System.out.println("Value is: " + value);
+                    
+                    buffer.flip();
+                    
+                    
+                }
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    private void printRequest(SocketChannel sc) throws IOException
+    {
+        ReadableByteChannel rbc = Channels.newChannel(sc.socket().getInputStream());
+        
+        
     }
     
     /**
