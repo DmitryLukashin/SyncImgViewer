@@ -20,6 +20,7 @@ import java.nio.channels.spi.SelectorProvider;
 import java.nio.file.Paths;
 import java.net.*;
 import java.util.*;
+import javax.swing.JFrame;
 
 /**
  *
@@ -40,6 +41,7 @@ public class ImageViewerUI extends javax.swing.JFrame {
         //Set full screen mode for window
         GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(this);
 
+        
         String sPath = GetCurrentDirectory();
         
         String sImgPath = Paths.get(sPath).getParent().toString() + "\\Images\\";
@@ -57,7 +59,6 @@ public class ImageViewerUI extends javax.swing.JFrame {
  
         ServerSocketChannel ssc = InitChannel();
         ListenSocket(ssc);
-        
     }
 
     private String GetCurrentDirectory()
@@ -203,15 +204,16 @@ public class ImageViewerUI extends javax.swing.JFrame {
                 {
                     System.out.println("The connection has been accepted...");
                     
+                    
                     ByteBuffer buffer = ByteBuffer.allocate(200);
+                    
                     int count = sc.read(buffer);
                     int value = buffer.getInt();
                     
                     System.out.println("Value is: " + value);
                     
                     buffer.flip();
-                    
-                    
+
                 }
             }
         }

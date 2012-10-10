@@ -3,13 +3,19 @@ package com.projects.syncimgviewer;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.View;
 
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.*;
+import java.nio.ByteBuffer;
 
 public class SincImgViewerActivity extends Activity
 {
@@ -20,26 +26,31 @@ public class SincImgViewerActivity extends Activity
         setContentView(R.layout.main);
         
         final Button buttonConnect = (Button)findViewById(R.id.btnConnect);
+        
         buttonConnect.setOnClickListener(new View.OnClickListener() {
 		
         final EditText txtPort = (EditText)findViewById(R.id.txtPort);
         final EditText txtIPAddress = (EditText)findViewById(R.id.txtIPAddress);
-        
-        
-			@Override
-			public void onClick(View v) {
 
+			//@Override
+			public void onClick(View v) {
+				
+				DataOutputStream dataOutputStream = null;
+				
 				try
 				{
 					String sPort = txtPort.getText().toString();
 					String sIPAddress = txtIPAddress.getText().toString();
 			    	
 					int port = Integer.parseInt(sPort);
-									
-					Socket socket = new Socket();
-					SocketAddress socketAddress = new InetSocketAddress(sIPAddress, port);
-					socket.connect(socketAddress);
-					socket.sendUrgentData(9);			//What this method exactly does?
+					
+					File imageFile = new File("/sdcard/IMG_0062.JPG");
+					long fileSize = imageFile.length();
+					
+					Socket socket = new Socket(sIPAddress, port);
+					dataOutputStream = new DataOutputStream(socket.getOutputStream());
+					dataOutputStream.writeUTF("Hello from Android...");
+					
 				}
 				catch(IOException e)
 				{
