@@ -10,12 +10,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.view.View;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.*;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class SincImgViewerActivity extends Activity
 {
@@ -45,11 +48,23 @@ public class SincImgViewerActivity extends Activity
 					int port = Integer.parseInt(sPort);
 					
 					File imageFile = new File("/sdcard/IMG_0062.JPG");
-					long fileSize = imageFile.length();
+					int fileSize = (int)imageFile.length();
+					
+					byte[] byteArray = new byte[fileSize];
+					
+					BufferedInputStream bis = new BufferedInputStream(new FileInputStream(imageFile));
+					bis.read(byteArray);
 					
 					Socket socket = new Socket(sIPAddress, port);
 					dataOutputStream = new DataOutputStream(socket.getOutputStream());
-					dataOutputStream.writeUTF("Hello from Android...");
+					
+					dataOutputStream.writeInt(fileSize);
+					
+					//dataOutputStream.write(byteArray);
+					
+					dataOutputStream.flush();
+					//dataOutputStream.write()
+					//writeUTF("Hello from Android...");
 					
 				}
 				catch(IOException e)

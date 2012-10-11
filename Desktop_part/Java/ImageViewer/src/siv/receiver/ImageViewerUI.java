@@ -204,11 +204,13 @@ public class ImageViewerUI extends javax.swing.JFrame {
                 {
                     System.out.println("The connection has been accepted...");
                     
-                    
-                    ByteBuffer buffer = ByteBuffer.allocate(200);
+                    int szInt = 4;
+                    ByteBuffer buffer = ByteBuffer.allocate(szInt);
                     
                     int count = sc.read(buffer);
-                    int value = buffer.getInt();
+                    
+                    
+                    int value = buffer.getInt(0);
                     
                     System.out.println("Value is: " + value);
                     
