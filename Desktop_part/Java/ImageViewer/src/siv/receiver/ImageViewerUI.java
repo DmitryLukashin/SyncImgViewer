@@ -6,6 +6,7 @@ package siv.receiver;
 
 import java.awt.*;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -208,14 +209,37 @@ public class ImageViewerUI extends javax.swing.JFrame {
                     ByteBuffer buffer = ByteBuffer.allocate(szInt);
                     
                     int count = sc.read(buffer);
-                    
-                    
-                    int value = buffer.getInt(0);
-                    
-                    System.out.println("Value is: " + value);
+                    int imgSize = buffer.getInt(0);
+                    System.out.println("The size of image is: " + imgSize);
                     
                     buffer.flip();
-
+                    
+                    ByteBuffer bufImgData = ByteBuffer.allocate(imgSize);
+                    
+                    sc.read(bufImgData);
+                    
+                    bufImgData.flip();
+                    
+                    //Thread.sleep(10000);
+                    
+                    String fPath = "C:\\Space\\testImage.jpg";
+                    File file = new File(fPath);
+                    FileChannel fc = new FileOutputStream(file, false).getChannel();
+                    
+                    fc.write(bufImgData);
+                    
+                    fc.close();
+                    
+                    System.out.println("The image data was transfered...");
+                    /*
+                    
+                    
+                    FileOutputStream fos = new FileOutputStream(fPath);
+                    byte[] imgBytes = new byte[imgSize];
+                    bufImgData.get(imgBytes);
+                    fos.write(imgBytes);
+                    
+                    fos.close();*/
                 }
             }
         }
@@ -223,6 +247,7 @@ public class ImageViewerUI extends javax.swing.JFrame {
         {
             e.printStackTrace();
         }
+       
     }
     
     private void printRequest(SocketChannel sc) throws IOException

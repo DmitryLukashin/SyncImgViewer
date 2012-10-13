@@ -14,7 +14,9 @@ import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.*;
 import java.nio.ByteBuffer;
@@ -28,6 +30,7 @@ public class SincImgViewerActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
+        final File imgFolder = new File("/sdcard/");
         final Button buttonConnect = (Button)findViewById(R.id.btnConnect);
         
         buttonConnect.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +50,15 @@ public class SincImgViewerActivity extends Activity
 			    	
 					int port = Integer.parseInt(sPort);
 					
-					File imageFile = new File("/sdcard/IMG_0062.JPG");
+					
+					File[] imgFiles = imgFolder.listFiles();
+					
+					if (imgFiles == null || imgFiles.length == 0)
+						return;
+					
+					File imageFile = imgFiles[1];
+					
+					
 					int fileSize = (int)imageFile.length();
 					
 					byte[] byteArray = new byte[fileSize];
@@ -60,11 +71,13 @@ public class SincImgViewerActivity extends Activity
 					
 					dataOutputStream.writeInt(fileSize);
 					
-					//dataOutputStream.write(byteArray);
+					dataOutputStream.flush();
+					
+					
+					dataOutputStream.write(byteArray);
 					
 					dataOutputStream.flush();
-					//dataOutputStream.write()
-					//writeUTF("Hello from Android...");
+				
 					
 				}
 				catch(IOException e)
