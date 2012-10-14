@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="22" version="2.0">
+<workbench progressCount="13" version="2.0">
 <workbenchAdvisor/>
-<window height="1040" width="960" x="820" y="0">
+<window height="1040" maximized="true" width="960" x="719" y="452">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="160"/>
 </perspectiveBar>
 <coolbarLayout locked="0">
 <coolItem id="group.file" itemType="typeGroupMarker"/>
-<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="262" y="22"/>
+<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="122" y="22"/>
 <coolItem id="additions" itemType="typeGroupMarker"/>
 <coolItem id="adt.actionSet.avdManager" itemType="typeToolBarContribution" x="38" y="22"/>
 <coolItem id="adt.actionSet.wizards" itemType="typeToolBarContribution" x="84" y="22"/>
@@ -39,7 +39,7 @@
 </editorArea>
 <editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SincImgViewerActivity.java" partName="SincImgViewerActivity.java" path="C:/Space/Projects/SyncImgViewer/Mobile_part/sincimgviewer/src/com/projects/syncimgviewer/SincImgViewerActivity.java" title="SincImgViewerActivity.java" tooltip="sincimgviewer/src/com/projects/syncimgviewer/SincImgViewerActivity.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/sincimgviewer/src/com/projects/syncimgviewer/SincImgViewerActivity.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2349" selectionTopPixel="458"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2536" selectionTopPixel="504"/>
 </editor>
 </editors>
 <views>
@@ -325,12 +325,6 @@
 <editor factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" org.eclipse.jdt.ui.ClassFileIdentifier="=sincimgviewer/C:\/Android\/android-sdk-windows\/platforms\/android-7\/android.jar&lt;android.view(View.class"/>
 </editors>
 <item historyLabel="SincImgViewerActivity.java" index="0">
-<position info="not_deleted" x="2225" y="0"/>
-</item>
-<item historyLabel="SincImgViewerActivity.java" index="0">
-<position info="not_deleted" x="2271" y="0"/>
-</item>
-<item historyLabel="SincImgViewerActivity.java" index="0">
 <position info="not_deleted" x="1765" y="0"/>
 </item>
 <item historyLabel="SincImgViewerActivity.java" index="0">
@@ -471,8 +465,14 @@
 <item historyLabel="View.class" index="1">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item active="true" historyLabel="SincImgViewerActivity.java" index="0">
+<item historyLabel="SincImgViewerActivity.java" index="0">
 <position info="not_deleted" x="2445" y="0"/>
+</item>
+<item historyLabel="SincImgViewerActivity.java" index="0">
+<position info="not_deleted" x="2302" y="0"/>
+</item>
+<item active="true" historyLabel="SincImgViewerActivity.java" index="0">
+<position info="not_deleted" x="2376" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>

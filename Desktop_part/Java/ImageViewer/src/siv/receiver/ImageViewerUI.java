@@ -220,26 +220,17 @@ public class ImageViewerUI extends javax.swing.JFrame {
                     
                     bufImgData.flip();
                     
-                    //Thread.sleep(10000);
                     
-                    String fPath = "C:\\Space\\testImage.jpg";
-                    File file = new File(fPath);
-                    FileChannel fc = new FileOutputStream(file, false).getChannel();
+                    for (int i = 0; i < imgSize; i++)
+                    {
+                        ByteBuffer oneByte = ByteBuffer.allocate(1);
+                        sc.read(oneByte);
+                        System.out.println("The byte " + (i + 1) + " was transfered...");    
+                    }
                     
-                    fc.write(bufImgData);
-                    
-                    fc.close();
                     
                     System.out.println("The image data was transfered...");
-                    /*
                     
-                    
-                    FileOutputStream fos = new FileOutputStream(fPath);
-                    byte[] imgBytes = new byte[imgSize];
-                    bufImgData.get(imgBytes);
-                    fos.write(imgBytes);
-                    
-                    fos.close();*/
                 }
             }
         }

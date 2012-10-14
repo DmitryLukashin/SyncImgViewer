@@ -73,17 +73,16 @@ public class SincImgViewerActivity extends Activity
 					
 					dataOutputStream.flush();
 					
-					
-					dataOutputStream.write(byteArray);
-					
-					dataOutputStream.flush();
-				
-					
+					for (int i = 0; i < fileSize; i++)
+					{
+						int offset = i;
+						dataOutputStream.write(byteArray, offset, 1);
+						dataOutputStream.flush();
+					}
 				}
 				catch(IOException e)
-				{
-					int n = 0;
-					n = n + 9;
+				{					
+					e.printStackTrace();
 				}
 			}
 		});
