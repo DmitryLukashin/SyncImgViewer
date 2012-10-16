@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 import android.view.View;
 
 import java.io.BufferedInputStream;
@@ -30,14 +32,14 @@ public class SincImgViewerActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        final File imgFolder = new File("/sdcard/");
+        final String imgFolderName = "/sdcard/";
         final Button buttonConnect = (Button)findViewById(R.id.btnConnect);
-        
+                
         buttonConnect.setOnClickListener(new View.OnClickListener() {
 		
         final EditText txtPort = (EditText)findViewById(R.id.txtPort);
         final EditText txtIPAddress = (EditText)findViewById(R.id.txtIPAddress);
-
+       
 			//@Override
 			public void onClick(View v) {
 				
@@ -45,18 +47,25 @@ public class SincImgViewerActivity extends Activity
 				
 				try
 				{
+					File imageFile = new ImageFileGetter(imgFolderName).GetImage();
+					ShowImage(imageFile);
+					
 					String sPort = txtPort.getText().toString();
 					String sIPAddress = txtIPAddress.getText().toString();
 			    	
 					int port = Integer.parseInt(sPort);
 					
-					
-					File[] imgFiles = imgFolder.listFiles();
-					
-					if (imgFiles == null || imgFiles.length == 0)
+					SocketConnector connector = new SocketConnector(sIPAddress, port, 3000);
+					if (!connector.Connect())
+					{
+						Toast.makeText(getApplicationContext(), connector.getErrorString(), Toast.LENGTH_LONG).show();
 						return;
+					}
 					
-					File imageFile = imgFiles[1];
+					//1. Launch a thread for transfering image
+					
+					
+					
 					
 					
 					int fileSize = (int)imageFile.length();
@@ -66,8 +75,7 @@ public class SincImgViewerActivity extends Activity
 					BufferedInputStream bis = new BufferedInputStream(new FileInputStream(imageFile));
 					bis.read(byteArray);
 					
-					Socket socket = new Socket(sIPAddress, port);
-					dataOutputStream = new DataOutputStream(socket.getOutputStream());
+					dataOutputStream = new DataOutputStream(connector.getSocket().getOutputStream());
 					
 					dataOutputStream.writeInt(fileSize);
 					
@@ -88,4 +96,12 @@ public class SincImgViewerActivity extends Activity
 		});
     }
     
+    private void ShowImage(File imageFile)
+    {
+    	ImageView imgViewBox = (ImageView)findViewById(R.id.imageView);
+
+		Bitmap bmp = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+		imgViewBox.setImageBitmap(bmp);
+    }
+
 }

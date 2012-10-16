@@ -15,6 +15,7 @@ public final class R {
     }
     public static final class id {
         public static final int btnConnect=0x7f050002;
+        public static final int imageView=0x7f050003;
         public static final int txtIPAddress=0x7f050000;
         public static final int txtPort=0x7f050001;
     }
