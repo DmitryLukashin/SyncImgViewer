@@ -34,7 +34,10 @@ public class SincImgViewerActivity extends Activity
         
         final String imgFolderName = "/sdcard/";
         final Button buttonConnect = (Button)findViewById(R.id.btnConnect);
-                
+       
+        final File imageFile = new ImageFileGetter(imgFolderName).GetImage();
+		//ShowImage(imageFile);
+		
         buttonConnect.setOnClickListener(new View.OnClickListener() {
 		
         final EditText txtPort = (EditText)findViewById(R.id.txtPort);
@@ -44,30 +47,30 @@ public class SincImgViewerActivity extends Activity
 			public void onClick(View v) {
 				
 				DataOutputStream dataOutputStream = null;
-				
-				try
-				{
-					File imageFile = new ImageFileGetter(imgFolderName).GetImage();
-					ShowImage(imageFile);
 					
+				/*
+				try
+				{*/
 					String sPort = txtPort.getText().toString();
 					String sIPAddress = txtIPAddress.getText().toString();
 			    	
 					int port = Integer.parseInt(sPort);
 					
+					ConnectionThread ct = new ConnectionThread(sIPAddress, port);
+					Thread connectionThread = new Thread(ct);
+					
+					connectionThread.start();
+					
+					/*
 					SocketConnector connector = new SocketConnector(sIPAddress, port, 3000);
 					if (!connector.Connect())
 					{
 						Toast.makeText(getApplicationContext(), connector.getErrorString(), Toast.LENGTH_LONG).show();
 						return;
-					}
+					}*/
 					
+					/*
 					//1. Launch a thread for transfering image
-					
-					
-					
-					
-					
 					int fileSize = (int)imageFile.length();
 					
 					byte[] byteArray = new byte[fileSize];
@@ -86,21 +89,25 @@ public class SincImgViewerActivity extends Activity
 						int offset = i;
 						dataOutputStream.write(byteArray, offset, 1);
 						dataOutputStream.flush();
-					}
+					}*/
+					/*
 				}
 				catch(IOException e)
 				{					
 					e.printStackTrace();
-				}
+				}*/
 			}
 		});
     }
     
     private void ShowImage(File imageFile)
     {
+    	if (imageFile == null) return;
+    		
     	ImageView imgViewBox = (ImageView)findViewById(R.id.imageView);
 
-		Bitmap bmp = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+    	String fPath = imageFile.getAbsolutePath();
+		Bitmap bmp = BitmapFactory.decodeFile(fPath);
 		imgViewBox.setImageBitmap(bmp);
     }
 
