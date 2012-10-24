@@ -2,6 +2,9 @@ package com.projects.syncimgviewer;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.Date;
+import java.util.Calendar;
+
 
 import android.widget.Toast;
 
@@ -32,15 +35,22 @@ public class SocketConnector {
 	{
 		socket = new Socket();
 		boolean result = true; 
+		
 		try
 		{
 			SocketAddress sa = new InetSocketAddress(host, port);
-			socket.connect(sa, timeout);
-		}
-		catch(IOException ioe)
-		{
-			errorMessage = ioe.getMessage();
-			result = false;
+			for (int i = 0; i < 3; i++)
+			{
+				try
+				{
+					socket.connect(sa,1000);
+					result = true;
+				}
+				catch(IOException ioe)
+				{
+					result = false;
+				}
+			}
 		}
 		catch(IllegalArgumentException iae)
 		{

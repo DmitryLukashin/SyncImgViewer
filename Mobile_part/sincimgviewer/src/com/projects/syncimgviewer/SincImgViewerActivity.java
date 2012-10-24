@@ -1,8 +1,8 @@
 package com.projects.syncimgviewer;
 
 import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -24,42 +24,93 @@ import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public class SincImgViewerActivity extends Activity
+public class SincImgViewerActivity extends Activity implements android.view.View.OnClickListener
 {
+	
+    //ConnectionThread ct = null;
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
+        final Button buttonConnect = (Button)findViewById(R.id.btnConnect);
+        //final Button buttonCancel = (Button)findViewById(R.id.btnCancel);
+        
+        buttonConnect.setOnClickListener(this);
+        //buttonCancel.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+    	switch (v.getId())
+    	{
+    		case R.id.btnConnect:
+    			Connect();
+    		break;
+    			
+    		/*
+    		case R.id.btnCancel:
+    			Cancel();
+    		break;*/
+    	}
+    }
+    
+    private void Connect()
+    {
+    	EditText txtPort = (EditText)findViewById(R.id.txtPort);
+        EditText txtIPAddress = (EditText)findViewById(R.id.txtIPAddress);
+        
+		String sPort = txtPort.getText().toString();
+		String sIPAddress = txtIPAddress.getText().toString();
+    	
+		int port = Integer.parseInt(sPort);
+		
+		Intent i = new Intent(this,  ConnectionActivity.class);	
+		startActivity(i);
+		
+		//
+		
+    }
+    
+    /*
+    private void Cancel()
+    {
+    	if (ct != null)
+    	{
+    		ct.cancel(true);
+    	}
+    }*/
+        /*
         final String imgFolderName = "/sdcard/";
         final Button buttonConnect = (Button)findViewById(R.id.btnConnect);
-       
-        final File imageFile = new ImageFileGetter(imgFolderName).GetImage();
+        final Button buttonCancel = (Button)findViewById(R.id.btnCancel);*/
+        
+        //final ConnectionThread ct = null;
+        //final File imageFile = new ImageFileGetter(imgFolderName).GetImage();
 		//ShowImage(imageFile);
-		
+
+        /*
         buttonConnect.setOnClickListener(new View.OnClickListener() {
-		
-        final EditText txtPort = (EditText)findViewById(R.id.txtPort);
-        final EditText txtIPAddress = (EditText)findViewById(R.id.txtIPAddress);
+
        
 			//@Override
 			public void onClick(View v) {
 				
-				DataOutputStream dataOutputStream = null;
+				//DataOutputStream dataOutputStream = null;
 					
 				/*
 				try
 				{*/
-					String sPort = txtPort.getText().toString();
-					String sIPAddress = txtIPAddress.getText().toString();
-			    	
-					int port = Integer.parseInt(sPort);
+
 					
-					ConnectionThread ct = new ConnectionThread(sIPAddress, port);
-					Thread connectionThread = new Thread(ct);
+					/*Thread connectionThread = new Thread(ct);
 					
-					connectionThread.start();
+					connectionThread.start();*/
+					
+					
 					
 					/*
 					SocketConnector connector = new SocketConnector(sIPAddress, port, 3000);
@@ -96,10 +147,38 @@ public class SincImgViewerActivity extends Activity
 				{					
 					e.printStackTrace();
 				}*/
+        /*
 			}
-		});
-    }
+		});*/
+    //}
     
+    /*
+    */
+    
+    /*
+    private void Connect()
+    {
+		String sPort = txtPort.getText().toString();
+		String sIPAddress = txtIPAddress.getText().toString();
+    	
+		int port = Integer.parseInt(sPort);
+		
+		setContentView(R.layout.conprogressview);
+
+		/*
+		ct = new ConnectionThread(sIPAddress, port,3);
+		ct.execute(null);*/
+    //}*/
+    
+    /*
+    private void Cancel()
+    {
+    	if (ct != null)
+    	{
+    		ct.cancel(true);
+    	}
+    }*/
+    /*
     private void ShowImage(File imageFile)
     {
     	if (imageFile == null) return;
@@ -109,6 +188,6 @@ public class SincImgViewerActivity extends Activity
     	String fPath = imageFile.getAbsolutePath();
 		Bitmap bmp = BitmapFactory.decodeFile(fPath);
 		imgViewBox.setImageBitmap(bmp);
-    }
+    }*/
 
 }
