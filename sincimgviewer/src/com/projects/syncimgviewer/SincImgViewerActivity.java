@@ -69,6 +69,8 @@ public class SincImgViewerActivity extends Activity implements android.view.View
 		int port = Integer.parseInt(sPort);
 		
 		Intent i = new Intent(this,  ConnectionActivity.class);	
+		i.putExtra("@string/host", sIPAddress);
+		i.putExtra("@string/port", port);
 		startActivity(i);
 		
 		//
