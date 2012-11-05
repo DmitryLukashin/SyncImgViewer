@@ -6,8 +6,16 @@
     android:layout_height="fill_parent"
     >
     
-<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cancel" android:id="@+id/btnCancel"></Button>
-     
+<Button android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" 
+		android:text="Cancel" 
+		android:id="@+id/btnCancel"></Button>
+		
+<TextView 	android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:id="@+id/tvOutput">
+</TextView> 
+   
 <com.projects.syncimgviewer.AnimationView android:layout_width="wrap_content" android:layout_height="wrap_content">
 	
 </com.projects.syncimgviewer.AnimationView>
